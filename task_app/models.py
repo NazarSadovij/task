@@ -13,13 +13,17 @@ class Task(models.Model):
         ('medium', 'Середній'),
         ('high', 'Високий')
     ]
-    title = models.CharField(max_length=255, verbose_name='Назва')
-    description = models.TextField(null=True, blank=True, verbose_name='Опис')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name='.')
-    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='medium', verbose_name='.')
-    due_date = models.DateTimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks', verbose_name='.')
+    title = models.CharField(max_length=255, verbose_name="Назва")
+    description = models.TextField(null=True, blank=True, verbose_name="Опис")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='to_do', verbose_name="Статус")
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='low', verbose_name="Пріоритет")
+    due_date = models.DateTimeField(null=True, blank=True, verbose_name="Назва")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Коли створено")
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks',null=True, blank=True, verbose_name="Ким створено")
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        verbose_name="Завдання"
+        verbose_name_plural="Завдання"
