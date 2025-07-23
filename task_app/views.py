@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from task_app.models import Task
 
@@ -13,5 +13,3 @@ class TaskDetailView(DetailView):
     temlate_name="Track/task_detail.html"
 
 
-
-    
