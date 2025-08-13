@@ -1,15 +1,34 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from task_app.models import Task
+from .forms import TaskForm
 
-# Create your views here.
-class TaskListView(ListView):
+
+
+class TaskListView(LoginRequiredMixin, ListView):
     model=Task
-    template_name = "Track/task_list.html"
+    template_name = "task_list.html"
 
-class TaskDetailView(DetailView):
+class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
-    temlate_name="Track/task_detail.html"
+    template_name="task_detail.html"
 
 
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    model = Task
+    template_name = "task_form.html"
+    form_class = TaskForm
+    success_url = reverse_lazy('task_list')
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user 
+        return super().form_valid(form)
+    
+
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    model = Task
+    template_name = "task_update.html"
+    form_class = TaskForm
+    success_url = reverse_lazy('task_list')

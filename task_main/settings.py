@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "task_app",
+    "auth_system",
 ]
 
 MIDDLEWARE = [
@@ -117,6 +118,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+LOGIN_URL = '/login/'
 
 
 # Default primary key field type
